@@ -15,7 +15,7 @@ router.get('/about', (req, res) => {
 // CREATE LOG POST //
 
 router.post('/', validateJWT, async (req, res) => {
-    const {description, definition, result} = req.body;
+    const {description, definition, result} = req.body.log;
     const {id} = req.user;
 
     const newLog = {
@@ -68,12 +68,13 @@ router.get("/:id", validateJWT, async (req, res) => {
 // UPDATE LOG //
 
 router.put("/:id", validateJWT, async (req, res) => {
-    const {description, definition, result} = req.body;
-    const {id} = req.user;
+    const {description, definition, result} = req.body.log;
+    const logId = req.params.id;
+    const userId = req.user.id;
 
     const query = {
         where : {
-            id: entryId,
+            id: logId,
             owner: userId
         }
     };
@@ -82,7 +83,7 @@ router.put("/:id", validateJWT, async (req, res) => {
         description,
         definition,
         result,
-        owner: id
+        //owner: id
     };
 
     try {
@@ -97,12 +98,12 @@ router.put("/:id", validateJWT, async (req, res) => {
 
 router.delete("/:id", validateJWT, async (req, res) => {
     const ownerId = req.user.id;
-    const entryId = req.params.id;
+    const logId = req.params.id;
 
     try {
         const query = {
             where: {
-                id: entryId,
+                id: logId,
                 owner: ownerId
             }
         };

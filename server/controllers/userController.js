@@ -18,7 +18,7 @@ router.post('/register', async (req, res) => {
 
     let token = jwt.sign({id: User}, process.env.JWT_SECRET, {expiresIn: 60 * 60 * 24});
     res.status(201).json({
-        message: "User successfull registered",
+        message: "User successfully registered",
         user: User,
         sessionToken: token
     });
